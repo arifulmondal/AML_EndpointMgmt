@@ -11,10 +11,10 @@ namespace AddEndpoint
     {
         static void Main(string[] args)
         {
-            const string endpointName = "newendpoint1";
-            const string workspaceId = "000bf7ab905345088dfa1843d6";//Replace with your id from workspace settings
-            const string workspaceToken = "6e8a7d5a5e0a4c0e2a9a761bd48";//Replace with your id from Settings, Auth Token
-            const string webserviceId = "b68ff4d7cfde431c5efcc1c3f9";//Replace with your id from Azure portal or help page url of the service after /webservices/
+            const string endpointName = "newendpoint2";
+            const string workspaceId = "000bf7ab90534500bb37588dfa1843d6";//From workspace settings
+            const string workspaceToken = "6e8a7d5a5edf44a0a4c0e2a9a761bd48";//From Settings, Auth Token
+            const string webserviceId = "b68ff4d7cfde4422b6231c5efcc1c3f9";//From Azure portal or help page url of the service after /webservices/
 
             string endpointUrl = getEndpointUrl(workspaceId, webserviceId, endpointName);
             string endpointsUrl = getEndpointsUrl(workspaceId, webserviceId);//to get endpoints list
@@ -36,13 +36,22 @@ namespace AddEndpoint
             }
 
             //Get endpoints
-            //Add new endpoint
+            //Get list of endpoint
             Console.WriteLine("Get endpoints? y/n");
             string responseGet = Console.ReadLine();
             if (responseGet == "y")
             {
                 ListEndpoints(endpointsUrl, workspaceToken).Wait();
             }
+
+            //Get endpoint
+            Console.WriteLine("Get endpoint? y/n");
+            string responseGetEndpoint = Console.ReadLine();
+            if (responseGet == "y")
+            {
+                GetEndpoint(endpointUrl, workspaceToken).Wait();
+            }
+
             Console.WriteLine("Press enter to close.");
             Console.ReadLine();
         }
@@ -150,6 +159,31 @@ namespace AddEndpoint
                 {
                     Console.WriteLine("Response status code {0}", response.StatusCode);
                     Console.WriteLine("ListEndpoints failed: {0}", response.ToString());
+                }
+            }
+        }
+        /**********************Get endpoint*************************************************/
+        static async Task GetEndpoint(string requestUri, string apiKey)
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", apiKey);
+                var requestMessage = new HttpRequestMessage(new HttpMethod("GET"), requestUri) { };
+
+                Console.WriteLine("Starting get endpoint.");
+
+                var response = await client.SendAsync(requestMessage);
+                string responseContent = await response.Content.ReadAsStringAsync();
+
+                if (response.IsSuccessStatusCode)
+                {
+
+                    Console.WriteLine(responseContent.ToString());
+                }
+                else
+                {
+                    Console.WriteLine("Response status code {0}", response.StatusCode);
+                    Console.WriteLine("Get endpoint failed: {0}", response.ToString());
                 }
             }
         }
