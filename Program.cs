@@ -101,6 +101,10 @@ namespace AddEndpoint
 
             //Format is: https://management.azureml.net/workspaces/<workspaceId>/webservices/<webserviceid>/endpoints/<name> 
             //You can get the workspaceId and webesrviceId from Scoring service's RRS help page url (remove apihelp and id after endpoints)
+            //For different Azure regions, you need to append the management.azureml.net with the Azure region. 
+            //For South East Asia append asiasoutheast. That makes the url https://asiasoutheast.azureml.net. 
+            //For Western Europe, https://europewest.management.azureml.net. 
+            //For US, leave as is.
             string endpointUrl = "https://management.azureml.net/workspaces/" + workspaceId + "/webservices/" + webserviceId + "/endpoints/" + endpointName;
             return endpointUrl;
         }
