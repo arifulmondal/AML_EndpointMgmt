@@ -11,10 +11,10 @@ namespace AddEndpoint
     {
         static void Main(string[] args)
         {
-            const string endpointName = "newendpoint2";
-            const string workspaceId = "000bf7ab90534500bb37588dfa1843d6";//From workspace settings
-            const string workspaceToken = "6e8a7d5a5edf44a0a4c0e2a9a761bd48";//From Settings, Auth Token
-            const string webserviceId = "b68ff4d7cfde4422b6231c5efcc1c3f9";//From Azure portal or help page url of the service after /webservices/
+            const string endpointName = "newendpoint1";
+            const string workspaceId = "yourWorkspaceId";//From workspace settings
+            const string workspaceToken = "yourWorkspaceAuthToken";//From Settings, Auth Token
+            const string webserviceId = "yourWebServiceId";//From Azure portal or help page url of the service after /webservices/
 
             string endpointUrl = getEndpointUrl(workspaceId, webserviceId, endpointName);
             string endpointsUrl = getEndpointsUrl(workspaceId, webserviceId);//to get endpoints list
@@ -102,7 +102,7 @@ namespace AddEndpoint
             //Format is: https://management.azureml.net/workspaces/<workspaceId>/webservices/<webserviceid>/endpoints/<name> 
             //You can get the workspaceId and webesrviceId from Scoring service's RRS help page url (remove apihelp and id after endpoints)
             //For different Azure regions, you need to append the management.azureml.net with the Azure region. 
-            //For South East Asia append asiasoutheast. That makes the url https://asiasoutheast.azureml.net. 
+            //For South East Asia append asiasoutheast. That makes the url https://asiasoutheast.management.azureml.net. 
             //For Western Europe, https://europewest.management.azureml.net. 
             //For US, leave as is.
             string endpointUrl = "https://management.azureml.net/workspaces/" + workspaceId + "/webservices/" + webserviceId + "/endpoints/" + endpointName;
